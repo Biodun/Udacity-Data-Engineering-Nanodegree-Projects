@@ -122,6 +122,9 @@ venv.bak/
 !.vscode/extensions.json
 *.code-workspace
 
+# Exclude WSL metadata 
+*:Zone.Identifier
+
 # Rope project settings
 .ropeproject
 
