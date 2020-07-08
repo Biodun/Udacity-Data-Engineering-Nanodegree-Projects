@@ -113,4 +113,8 @@ ORDER BY COUNT(DISTINCT user_id) DESC
 LIMIT 5; 
 ```
 
+## To do
+1. Add precommit hooks for code formatting and checking for secrets.
+2. Create a [Streamlit tool](https://www.streamlit.io/) for visualizing the data
+
 
