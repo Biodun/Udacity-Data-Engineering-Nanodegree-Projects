@@ -52,9 +52,10 @@ In order to create the Data Warehouse, we need to create a Extract, Load and Tra
 }
 ```
 
-## ETL Pipeline
-Our ETL pipeline consists of the following steps:
-1. Use the `create_tables.py` script to create the _`sparkifydb`_ database which comprises of the following tables:
+## Data warehouse architecture and ETL Pipeline
+
+We use a [Star schema](https://en.wikipedia.org/wiki/Star_schema) architecture with one fact table and four dimension tables, and our ETL pipeline consists of the following steps:
+1. Use the `create_tables.py` script to create the _`sparkifydb`_ database which comprises of the following tables arranged in a :
 
     -  Fact table:
         - `songplays`
@@ -65,19 +66,32 @@ Our ETL pipeline consists of the following steps:
         - `time`    
 2. Read and process data from the song data and log data files (stored in the `data\log_data`, and `data\song_data` folders), and load the processed data into the database using the `etl.py` script.
 
-## Executing the code
-Navigate to root directory of this repository and  execute the following commands at command line:   
+## Setup
+
+1. Use [Docker](www.docker.com) to create a disposable Postgres container using the instructions in this great [blog article](https://hackernoon.com/dont-install-postgres-docker-pull-postgres-bee20e200198):
+
+    * Navigate to [this](https://www.docker.com/get-started) webpage to install Docker if you don't already have it installed.
+    * Create a Postgres database running on port 5432 in a Docker container 
+
+        ```
+        docker run --rm --name udacity-postgres-docker -d -e POSTGRES_PASSWORD=student -e POSTGRES_USER=student -e POSTGRES_DB=studentdb -p 5432:5432 postgres
+        ```
+
+2. Install the [Miniconda](https://docs.conda.io/en/latest/miniconda.html) package and environment manager to create an isolated python environment for this demo.
+3. Use the `environment.yml` file in this repo to create a conda environment with all the packages required to run the code in this repository:
+> `conda env create --file environment.yml --name udacity_data_eng`
+
+4. Activate the installed conda environment:
+> `conda activate udacity_data_eng`
+
+4. Navigate to `Projects/Data_modeling_with_Postgres` folder of this repository and  execute the following commands at command line:   
 ```
-$ python create_tables.py
-$ python etl.py
+$ python src/create_tables.py
+$ python src/etl.py
 ```
-
-
-
-### Data warehouse architecture
-We use a star schema architecture with the a single fact table and 4 dimension tables.
-
 ## Results
+Use the following queries to explore the data we loaded into our database:
+
 1. Query top 10 users by number of songs listened to:
 ```sql
 SELECT COUNT(DISTINCT songplays.songplay_id) AS "Number of songs listened to", users.first_name, users.last_name 
@@ -86,6 +100,8 @@ GROUP BY users.user_id
 ORDER BY COUNT(DISTINCT songplay_id) DESC
 LIMIT 10;
 ```
+
+
 
 2. What locales do most of customers live in?
 

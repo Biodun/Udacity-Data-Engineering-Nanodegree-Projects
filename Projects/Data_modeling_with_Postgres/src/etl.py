@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import psycopg2
 from psycopg2 import Error
-
+from pathlib import Path
 from sql_queries import *
 
 
@@ -145,7 +145,7 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
-    """[summary]
+    """ Parse and process log and song data
 
     Parameters
     ----------
@@ -185,10 +185,13 @@ def main():
     )
     cur = conn.cursor()
     print("Processing song data files....")
-    process_data(cur, conn, filepath="data/song_data", func=process_song_file)
+    SONG_DATA_FILEPATH = Path.cwd() / 'data/song_data'
+    print( 'SONG_DATA_FILEPATH:', SONG_DATA_FILEPATH)
+    process_data(cur, conn, filepath=SONG_DATA_FILEPATH, func=process_song_file)
     print("Song data ingest completed.")
     print("Processing log data files....")
-    process_data(cur, conn, filepath="data/log_data", func=process_log_file)
+    LOG_DATA_FILEPATH = Path.cwd() / 'data/log_data'
+    process_data(cur, conn, filepath=LOG_DATA_FILEPATH, func=process_log_file)
     print("Log data ingest completed.")
     conn.close()
 
