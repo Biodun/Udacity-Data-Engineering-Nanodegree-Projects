@@ -78,7 +78,7 @@ We use a [Star schema](https://en.wikipedia.org/wiki/Star_schema) architecture w
         ```
 
 2. Install the [Miniconda](https://docs.conda.io/en/latest/miniconda.html) package and environment manager to create an isolated python environment for this demo.
-3. Use the `environment.yml` file in this repo to create a conda environment with all the packages required to run the code in this repository:
+3. Clone this repo, then navigate to the `Projects/Data_modeling_with_Postgres` folder. Use the `environment.yml` file to create a conda environment with all the packages required to run the code in this repository:
 > `conda env create --file environment.yml --name udacity_data_eng`
 
 4. Activate the installed conda environment:
@@ -100,9 +100,6 @@ GROUP BY users.user_id
 ORDER BY COUNT(DISTINCT songplay_id) DESC
 LIMIT 10;
 ```
-
-
-
 2. What locales do most of customers live in?
 
 ```sql
