@@ -8,11 +8,14 @@ time_table_drop = "DROP TABLE IF EXISTS time;"
 
 # CREATE TABLES
 
-songplay_table_create = """ CREATE TABLE songplays (songplay_id SERIAL PRIMARY KEY, start_time TIMESTAMP NOT NULL, user_id VARCHAR(80) NOT NULL, level VARCHAR(10), song_id VARCHAR(80), artist_id VARCHAR(80), session_id INTEGER NOT NULL, location TEXT, user_agent TEXT);
-"""
+songplay_table_create = """ CREATE TABLE songplays (songplay_id SERIAL PRIMARY KEY, start_time TIMESTAMP NOT NULL, 
+                            user_id VARCHAR(80) NOT NULL, level VARCHAR(10), song_id VARCHAR(80), artist_id VARCHAR(80), 
+                            session_id INTEGER NOT NULL, location TEXT, user_agent TEXT);
+                        """
 
-user_table_create = """ CREATE TABLE users (user_id VARCHAR(80) PRIMARY KEY, first_name VARCHAR(80), last_name VARCHAR(80), gender CHAR(1), level VARCHAR(10));
-"""
+user_table_create = """ CREATE TABLE users (user_id VARCHAR(80) PRIMARY KEY, first_name VARCHAR(80), last_name VARCHAR(80), 
+                        gender CHAR(1), level VARCHAR(10));
+                    """
 
 song_table_create = """ CREATE TABLE songs (song_id VARCHAR(80) PRIMARY KEY, title VARCHAR(80), artist_id VARCHAR(80), year SMALLINT, duration REAL);
 """
@@ -20,25 +23,25 @@ song_table_create = """ CREATE TABLE songs (song_id VARCHAR(80) PRIMARY KEY, tit
 artist_table_create = """ CREATE TABLE artists (artist_id VARCHAR(80) PRIMARY KEY, name TEXT, location VARCHAR(80), latitude REAL, longitude REAL);
 """
 
-time_table_create = """ CREATE TABLE time (start_time TIMESTAMP, hour SMALLINT, day VARCHAR(6), week SMALLINT, month SMALLINT, year SMALLINT,  weekday SMALLINT);
-"""
+time_table_create = """ CREATE TABLE time (start_time TIMESTAMP, hour SMALLINT, day VARCHAR(6), 
+                        week SMALLINT, month SMALLINT, year SMALLINT,  weekday SMALLINT);"""
 
 # INSERT RECORDS
 
-songplay_table_insert = """ INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-"""
+songplay_table_insert = """ INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) 
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
 
 # Do nothing if the user id already exists in the table
-user_table_insert = """ INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES (%s, %s, %s, %s, %s) ON CONFLICT (user_id) DO UPDATE SET user_id = EXCLUDED.user_id;
-"""
+user_table_insert = """ INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES (%s, %s, %s, %s, %s) 
+                        ON CONFLICT (user_id) DO UPDATE SET user_id = EXCLUDED.user_id;"""
 
 song_table_insert = """ INSERT INTO songs (song_id, title,  artist_id, year, duration) VALUES (%s, %s, %s, %s, %s);
 """
 
 # Do nothing if the artist entry already exists
-artist_table_insert = """ INSERT INTO artists (artist_id, name, location, latitude, longitude) VALUES (%s, %s, %s, %s, %s) ON CONFLICT (artist_id) DO UPDATE SET artist_id = EXCLUDED.artist_id
+artist_table_insert = """ INSERT INTO artists (artist_id, name, location, latitude, longitude) VALUES (%s, %s, %s, %s, %s) 
+                          ON CONFLICT (artist_id) DO UPDATE SET artist_id = EXCLUDED.artist_id
 """
-
 
 time_table_insert = """ INSERT INTO time (start_time, hour, day, week, month, year, weekday) VALUES (%s, %s, %s, %s, %s, %s, %s)
 """
@@ -46,10 +49,10 @@ time_table_insert = """ INSERT INTO time (start_time, hour, day, week, month, ye
 # FIND SONGS
 
 song_select = """ SELECT songs.song_id, artists.artist_id FROM songs JOIN artists ON artists.artist_id = songs.artist_id
-WHERE songs.title = %s
-AND artists.name = %s
-AND songs.duration = %s
-"""
+                  WHERE songs.title = %s
+                  AND artists.name = %s
+                  AND songs.duration = %s
+              """
 
 # QUERY LISTS
 
